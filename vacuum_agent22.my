@@ -1,0 +1,41 @@
+class VacuumAgent:
+    def __init__(self):
+        self.location = (0, 0)  # percept: current cell (row, col) in the 2*2 grid
+        self.environment = [
+            ['dirty', 'dirty'],
+            ['dirty', 'clean']
+        ]
+
+    def interpret_input(self):
+        row, col = self.location
+        return self.environment[row][col]  # state
+
+    def rule_action(self, state):
+        if state == 'dirty':
+            row, col = self.location
+            print("Cleaning cell", self.location)
+            self.environment[row][col] = 'clean'
+        else:
+            row, col = self.location
+            print("Moving to the next cell")
+            # move: left -> right, then next row (wrap around at the end)
+            col += 1
+            if col >= len(self.environment[0]):
+                col = 0
+                row = (row + 1) % len(self.environment)
+            self.location = (row, col)
+
+    def is_all_clean(self):
+        return all(
+            cell == 'clean'
+            for row in self.environment
+            for cell in row
+        )
+
+
+agent = VacuumAgent()
+print("Initial environment:", agent.environment)
+while not agent.is_all_clean():
+    state = agent.interpret_input()
+    agent.rule_action(state)
+print("Final environment:", agent.environment)
