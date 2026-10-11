@@ -1,9 +1,11 @@
 class VacuumAgent:
     def __init__(self):
-        self.location = (0, 0)  # percept: current cell (row, col) in the 2*2 grid
+        self.location = (0, 0)  # percept: current cell (row, col) in the 4*4 grid
         self.environment = [
-            ['dirty', 'dirty'],
-            ['dirty', 'clean']
+            ['dirty', 'dirty', 'dirty', 'clean'],
+            ['dirty', 'clean', 'dirty', 'dirty'],
+            ['clean', 'dirty', 'dirty', 'dirty'],
+            ['dirty', 'dirty', 'clean', 'dirty']
         ]
 
     def interpret_input(self):
